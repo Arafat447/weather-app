@@ -29,7 +29,7 @@
             </div>
         </form>
         <div class="weather-status text-white text-center">
-            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <img id="image" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
             <h1 id="input-location"></h1>
             <h3><span id="temperature"></span></h3>
             <h3><span id="feels-like"></span></h3>
@@ -54,6 +54,8 @@
                 document.getElementById("weather-description").innerText =data.weather[0].description;
                 document.getElementById("cloud").innerText =`Humidity ${data.main.humidity} %`;
                 document.getElementById("wind-speed").innerText =`Wind speed ${data.wind.speed} km/h`;
+                
+                document.getElementById('image').setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
                 console.log(data);
             })
         }
