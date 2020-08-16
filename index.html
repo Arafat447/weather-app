@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="location" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="submit-location" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="input-location"></h1>
+            <h3><span id="temperature"></span></h3>
+            <h3><span id="feels-like"></span></h3>
+            <h3><span id="weather-description"></span></h3>
+            <h3 id="cloud"></h3>
+            <h3><span id="wind-speed"></span></h3>
+        </div>
+    </div>
+    <script>
+        document.getElementById("submit-location").addEventListener("click",function(){
+            const location = document.getElementById("location").value;
+            weather(location);
+        })
+        function weather(name){
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=` + `${name}` + `&APPID=381e82a6a7d50e7c90e00887344e21c5&units=metric`)
+            .then(res => res.json())
+            .then (data => {
+                 const currentTemperature = document.getElementById("temperature");
+                 currentTemperature.innerText =` ${data.main.temp} \xB0C`;
+                document.getElementById("input-location").innerText = data.name;
+                document.getElementById("feels-like").innerText =`Feels Like ${data.main.feels_like} \xB0C`;
+                document.getElementById("weather-description").innerText =data.weather[0].description;
+                document.getElementById("cloud").innerText =`Humidity ${data.main.humidity} %`;
+                document.getElementById("wind-speed").innerText =`Wind speed ${data.wind.speed} km/h`;
+                console.log(data);
+            })
+        }
+        
+    </script>
+</body>
+
+</html>
